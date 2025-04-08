@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUICore
 
 struct Recipe: Codable {
   var cuisine: String = ""
@@ -15,4 +16,14 @@ struct Recipe: Codable {
   var uuid: String = ""
   var sourceUrl: String?
   var youtubeUrl: String?
+
+  func getSmallUrl() -> URL? {
+    guard let urlString = photoUrlSmall else { return nil }
+    return URL(string: urlString)
+  }
+
+  func getLargeUrl() -> URL? {
+    guard let urlString = photoUrlLarge else { return nil }
+    return URL(string: urlString)
+  }
 }

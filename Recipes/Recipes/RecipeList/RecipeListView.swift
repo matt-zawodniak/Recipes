@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct RecipeListView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+  @ObservedObject var vm = RecipeListViewModel()
+  @State var showingSelectedRecipe: Bool = false
+  var body: some View {
+        List {
+          ForEach(vm.recipes, id: \.uuid) { recipe in
+            RecipeRowView(recipe: recipe)
+              .onTapGesture {
+                vm.selectRecipe(recipe: recipe)
+                showingSelectedRecipe = true
+              }
+          }
         }
+        .listStyle(.plain)
         .padding()
+        .refreshable {
+          Task {
+            await vm.fetchRecipes()
+          }
+        }
+        .sheet(isPresented: $showingSelectedRecipe) {
+          if let recipe = vm.selectedRecipe {
+            RecipeView(recipe: recipe)
+          }
+        }
     }
 }
 

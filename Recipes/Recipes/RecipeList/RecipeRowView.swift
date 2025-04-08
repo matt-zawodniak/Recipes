@@ -8,11 +8,26 @@
 import SwiftUI
 
 struct RecipeRowView: View {
+  let recipe: Recipe
+  var loadingImage: Bool = true
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+      HStack {
+        AsyncImage(url: recipe.getSmallUrl()) { image in
+          image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+        } placeholder: {
+          ProgressView()
+        }
+        .frame(width: 50, height: 50)
+
+        Text(recipe.name)
+        Spacer()
+        Text(recipe.cuisine)
+      }
     }
 }
 
 #Preview {
-    RecipeRowView()
+  RecipeRowView(recipe: Recipe())
 }
