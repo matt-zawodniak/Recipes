@@ -11,6 +11,18 @@ struct RecipeListView: View {
   @ObservedObject var vm = RecipeListViewModel()
   @State var showingSelectedRecipe: Bool = false
   var body: some View {
+    if vm.recipes.isEmpty {
+      VStack {
+        Spacer()
+        Text("No Recipes Found. Please Try Again.")
+        Button("Retry") {
+          Task {
+            await vm.fetchRecipes()
+          }
+        }
+        Spacer()
+      }
+    }
         List {
           ForEach(vm.recipes, id: \.uuid) { recipe in
             RecipeRowView(recipe: recipe)

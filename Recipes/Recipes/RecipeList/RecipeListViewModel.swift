@@ -11,6 +11,7 @@ import Foundation
 class RecipeListViewModel: ObservableObject {
   @Published var recipes: [Recipe] = []
   @Published var selectedRecipe: Recipe?
+  @Published var showingError: Bool = false
 
   init() {
     Task {
@@ -23,6 +24,7 @@ class RecipeListViewModel: ObservableObject {
       recipes = try await RecipeAPI().fetchRecipes()
     } catch {
       print("Failed to fetch recipes: \(error)")
+      showingError = true
     }
   }
 

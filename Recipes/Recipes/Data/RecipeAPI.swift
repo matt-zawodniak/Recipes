@@ -21,7 +21,7 @@ class RecipeAPI {
       throw Errors.invalidURL
     }
 
-    let (data, response) = try await URLSession.shared.data(from: url)
+    let (data, response) = try await session.data(from: url)
 
     guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
       throw Errors.invalidResponse
