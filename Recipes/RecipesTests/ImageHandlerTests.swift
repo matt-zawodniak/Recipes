@@ -20,15 +20,22 @@ final class ImageHandlerTests: XCTestCase {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
 
-  func testGetImageWhenLocalFileExists() {
-    
+  func testGetImageWhenLocalFileExists() async {
+    let urlString = "checkmark"
+    let folderName = "Images"
+    let image = UIImage(systemName: urlString)!
+    ImageHandler.shared.saveImage(image: image, imageName: urlString, folderName: folderName)
+
+    if let fetchedImage = await ImageHandler.shared.getImage(for: urlString) {
+      XCTAssert(fetchedImage.jpegData(compressionQuality: 1)?.count ?? 0 > 0)
+    } else {
+      XCTFail("Failed to fetch image")
+    }
   }
 
-  func testGetImageWhenNoLocalFileExists() {
-    
-  }
-
-  func testGetImageWithInvalidURL() {
-    
+  func testGetImageWithInvalidURL() async {
+    let badURLString = "invalid url"
+    let badImage = await ImageHandler.shared.getImage(for: badURLString)
+    XCTAssertNil(badImage)
   }
 }
