@@ -7,9 +7,16 @@
 
 import Foundation
 
-struct RecipeAPI {
-  static func fetchRecipes() async throws -> [Recipe] {
+class RecipeAPI {
+  let session: URLSession
+
+  init(session: URLSession = URLSession.shared) {
+    self.session = session
+  }
+
+  func fetchRecipes() async throws -> [Recipe] {
     let api = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+
     guard let url = URL(string: api) else {
       throw Errors.invalidURL
     }

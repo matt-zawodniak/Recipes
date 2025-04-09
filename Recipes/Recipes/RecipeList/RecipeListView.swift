@@ -23,9 +23,7 @@ struct RecipeListView: View {
         .listStyle(.plain)
         .padding()
         .refreshable {
-          Task {
-            await vm.fetchRecipes()
-          }
+          await vm.fetchRecipes()
         }
         .sheet(isPresented: $showingSelectedRecipe) {
           if let recipe = vm.selectedRecipe {

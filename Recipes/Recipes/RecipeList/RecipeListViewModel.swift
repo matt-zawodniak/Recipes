@@ -20,7 +20,7 @@ class RecipeListViewModel: ObservableObject {
 
   func fetchRecipes() async {
     do {
-      recipes = try await RecipeAPI.fetchRecipes()
+      recipes = try await RecipeAPI().fetchRecipes()
     } catch {
       print("Failed to fetch recipes: \(error)")
     }

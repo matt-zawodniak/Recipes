@@ -31,7 +31,3 @@ struct RecipeRowView: View {
       }
     }
 }
-
-#Preview {
-  RecipeRowView(recipe: Recipe())
-}

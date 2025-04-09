@@ -33,7 +33,3 @@ struct RecipeView: View {
       }
     }
 }
-
-#Preview {
-  RecipeView(recipe: Recipe())
-}
