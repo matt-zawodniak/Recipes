@@ -13,6 +13,7 @@ class RecipeListViewModel: ObservableObject {
   @Published var selectedRecipe: Recipe?
   @Published var showingError: Bool = false
   @Published var isLoading: Bool = true
+  @Published var sortMethod: SortMethod = .name
 
   init() {
     Task {
@@ -34,5 +35,28 @@ class RecipeListViewModel: ObservableObject {
 
   func selectRecipe(recipe: Recipe) {
     selectedRecipe = recipe
+  }
+
+  func sortRecipes() {
+    switch sortMethod {
+      case .name:
+      self.recipes.sort { $0.name < $1.name }
+    case .cuisine:
+      self.recipes.sort { $0.cuisine < $1.cuisine }
+    }
+  }
+}
+
+enum SortMethod: Int, CaseIterable {
+  case name = 0
+  case cuisine = 1
+
+  var description: String {
+    switch self {
+    case .name:
+      return "Name"
+    case .cuisine:
+      return "Cuisine"
+    }
   }
 }
