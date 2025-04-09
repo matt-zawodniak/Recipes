@@ -27,7 +27,7 @@ struct RecipeRowView: View {
         Text(recipe.cuisine)
       }
       .task {
-        image = await ImageHandler.shared.getLocalImage(for: recipe.photoUrlSmall)
+        image = await ImageHandler.shared.getImage(for: recipe.photoUrlSmall)
       }
     }
 }

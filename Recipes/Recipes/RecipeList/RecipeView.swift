@@ -29,7 +29,7 @@ struct RecipeView: View {
         // TODO: Youtube link, embedded or links out
       }
       .task {
-        image = await ImageHandler.shared.getLocalImage(for: recipe.photoUrlLarge)
+        image = await ImageHandler.shared.getImage(for: recipe.photoUrlLarge)
       }
     }
 }

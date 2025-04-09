@@ -14,9 +14,9 @@ class ImageHandler {
 
   private init() {}
 
-  func getLocalImage(for urlString: String?) async -> UIImage? {
+  func getImage(for urlString: String?) async -> UIImage? {
     if let url = urlString {
-      if let localImage = getImage(imageName: url.sanitized(), folderName: folderName) {
+      if let localImage = getLocalImage(imageName: url.sanitized(), folderName: folderName) {
         print("Fetching local image")
         return localImage
       } else {
@@ -64,7 +64,7 @@ class ImageHandler {
     }
   }
 
-  func getImage(imageName: String, folderName: String) -> UIImage? {
+  func getLocalImage(imageName: String, folderName: String) -> UIImage? {
     guard let url = getURLForImage(imageName: imageName, folderName: folderName),
           FileManager.default.fileExists(atPath: url.path) else { return nil }
 
