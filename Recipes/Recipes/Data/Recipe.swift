@@ -27,13 +27,13 @@ struct Recipe: Codable {
 //    return URL(string: urlString)
 //  }
 
-  func getSmallImage() async -> UIImage? {
-    let image = await ImageHandler.shared.getAnyImage(for: photoUrlSmall)
-    return image
-  }
-
-  func getLargeImage() async -> UIImage? {
-    let image = await ImageHandler.shared.getAnyImage(for: photoUrlLarge)
-    return image
-  }
+//  func getSmallImage() async -> UIImage? {
+//    let image = await ImageHandler.shared.getImageUrl(for: photoUrlSmall)
+//    return image
+//  }
+//
+//  func getLargeImage() async -> UIImage? {
+//    let image = await ImageHandler.shared.getImageUrl(for: photoUrlLarge)
+//    return image
+//  }
 }

@@ -9,21 +9,25 @@ import SwiftUI
 
 struct RecipeRowView: View {
   let recipe: Recipe
-  var loadingImage: Bool = true
+  @State var image: UIImage?
     var body: some View {
       HStack {
-        AsyncImage(url: recipe.getSmallUrl()) { image in
-          image
+        if let image = image {
+          Image(uiImage: image)
             .resizable()
             .aspectRatio(contentMode: .fit)
-        } placeholder: {
+            .frame(width: 50, height: 50)
+        } else {
           ProgressView()
+            .frame(width: 50, height: 50)
         }
-        .frame(width: 50, height: 50)
 
         Text(recipe.name)
         Spacer()
         Text(recipe.cuisine)
+      }
+      .task {
+        image = await ImageHandler.shared.getLocalImage(for: recipe.photoUrlSmall)
       }
     }
 }

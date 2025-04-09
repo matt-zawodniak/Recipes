@@ -9,14 +9,17 @@ import SwiftUI
 
 struct RecipeView: View {
   @State var recipe: Recipe
+  @State var image: UIImage?
     var body: some View {
       VStack {
-        AsyncImage(url: recipe.getLargeImage()) { image in
-          image
+        if let image = image {
+          Image(uiImage: image)
             .resizable()
             .aspectRatio(contentMode: .fit)
-        } placeholder: {
+            .frame(width: 50, height: 50)
+        } else {
           ProgressView()
+            .frame(width: 50, height: 50)
         }
 
         Text(recipe.name)
@@ -24,6 +27,9 @@ struct RecipeView: View {
 
         // TODO: Website link that actually links out
         // TODO: Youtube link, embedded or links out
+      }
+      .task {
+        image = await ImageHandler.shared.getLocalImage(for: recipe.photoUrlLarge)
       }
     }
 }

@@ -14,13 +14,15 @@ class ImageHandler {
 
   private init() {}
 
-  func getAnyImage(for urlString: String?) async -> URL? {
+  func getLocalImage(for urlString: String?) async -> UIImage? {
     if let url = urlString {
-      if let localImage = getLocalImage(imageName: url, folderName: folderName) {
+      if let localImage = getImage(imageName: url.sanitized(), folderName: folderName) {
+        print("Fetching local image")
         return localImage
       } else {
         do {
           let image = try await downloadImage(for: url)
+          print("Downloaded image")
           return image
         } catch let error {
           print("Error downloading image: \(error)")
@@ -43,7 +45,7 @@ class ImageHandler {
       throw Errors.errorDownloadingPicture
     }
 
-    saveImage(image: image, imageName: urlString, folderName: folderName)
+    saveImage(image: image, imageName: urlString.sanitized(), folderName: folderName)
 
     return image
   }
@@ -62,7 +64,7 @@ class ImageHandler {
     }
   }
 
-  func getLocalImage(imageName: String, folderName: String) -> UIImage? {
+  func getImage(imageName: String, folderName: String) -> UIImage? {
     guard let url = getURLForImage(imageName: imageName, folderName: folderName),
           FileManager.default.fileExists(atPath: url.path) else { return nil }
 
