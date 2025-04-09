@@ -10,7 +10,21 @@ import SwiftUI
 struct RecipeView: View {
   @State var recipe: Recipe
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+      VStack {
+        AsyncImage(url: recipe.getLargeImage()) { image in
+          image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+        } placeholder: {
+          ProgressView()
+        }
+
+        Text(recipe.name)
+        Text(recipe.cuisine)
+
+        // TODO: Website link that actually links out
+        // TODO: Youtube link, embedded or links out
+      }
     }
 }
 

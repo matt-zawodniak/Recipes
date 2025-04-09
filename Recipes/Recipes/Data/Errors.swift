@@ -11,4 +11,5 @@ enum Errors: Error {
   case invalidURL
   case invalidJSON
   case invalidResponse
+  case errorDownloadingPicture
 }
