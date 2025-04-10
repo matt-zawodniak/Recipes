@@ -15,6 +15,10 @@ struct RecipeListView: View {
       Text("RECIPES")
         .font(.headline)
       HStack {
+        TextField("Search Recipes", text: $vm.searchText)
+          .onChange(of: vm.searchText) {
+            vm.filterRecipes()
+          }
         Text("Sort By:")
         Picker("Sort", selection: $vm.sortMethod) {
           ForEach(SortMethod.allCases, id: \.self) { val in
@@ -50,7 +54,7 @@ struct RecipeListView: View {
         }
       } else {
         List {
-          ForEach(vm.recipes, id: \.uuid) { recipe in
+          ForEach(vm.filteredRecipes, id: \.uuid) { recipe in
             RecipeRowView(recipe: recipe)
               .onTapGesture {
                 vm.selectRecipe(recipe: recipe)
@@ -59,7 +63,6 @@ struct RecipeListView: View {
           }
         }
         .listStyle(.plain)
-        .padding()
         .refreshable {
           await vm.fetchRecipes()
         }
@@ -70,6 +73,7 @@ struct RecipeListView: View {
         }
       }
     }
+    .padding()
   }
 }
 

@@ -9,15 +9,18 @@ import Foundation
 
 @MainActor
 class RecipeListViewModel: ObservableObject {
-  @Published var recipes: [Recipe] = []
+  var recipes: [Recipe] = []
   @Published var selectedRecipe: Recipe?
   @Published var showingError: Bool = false
   @Published var isLoading: Bool = true
   @Published var sortMethod: SortMethod = .name
+  @Published var filteredRecipes: [Recipe] = []
+  @Published var searchText: String = ""
 
   init() {
     Task {
       await fetchRecipes()
+      filteredRecipes = recipes
       isLoading = false
     }
   }
@@ -33,6 +36,14 @@ class RecipeListViewModel: ObservableObject {
     isLoading = false
   }
 
+  func filterRecipes() {
+    if !searchText.isEmpty {
+      filteredRecipes = recipes.filter({ $0.name.lowercased().contains(searchText.lowercased()) || $0.cuisine.lowercased().contains(searchText.lowercased()) })
+    } else {
+      filteredRecipes = recipes
+    }
+  }
+
   func selectRecipe(recipe: Recipe) {
     selectedRecipe = recipe
   }
@@ -40,9 +51,9 @@ class RecipeListViewModel: ObservableObject {
   func sortRecipes() {
     switch sortMethod {
       case .name:
-      self.recipes.sort { $0.name < $1.name }
+      self.filteredRecipes.sort { $0.name < $1.name }
     case .cuisine:
-      self.recipes.sort { $0.cuisine < $1.cuisine }
+      self.filteredRecipes.sort { $0.cuisine < $1.cuisine }
     }
   }
 }
