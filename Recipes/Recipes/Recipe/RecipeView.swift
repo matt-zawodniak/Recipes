@@ -30,8 +30,13 @@ struct RecipeView: View {
           Text(recipe.cuisine)
             .font(.title2.italic())
 
-          // Website link that actually links out
-          // Youtube link, embedded or links out
+          if let sourceUrlString = recipe.sourceUrl, let url = URL(string: sourceUrlString) {
+            Link("Full Recipe Can Be Found By Clicking Here", destination: url)
+          }
+
+          if let youtubeUrl = recipe.youtubeUrl {
+            VideoView(videoURLString: youtubeUrl)
+          }
         }
         Spacer()
       }
