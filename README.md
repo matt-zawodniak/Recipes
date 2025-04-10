@@ -2,6 +2,14 @@
  
 ### Summary: Include screen shots or a video of your app highlighting its features
 
+https://github.com/user-attachments/assets/9f6c57f7-45a3-45d8-b94e-f6fd3f599d6e
+
+Notable Features:
+- List sortable by name or cuisine
+- Recipe list searchable independent of capitalization and keeps sorting method.
+- Tapping on a recipe opens a sheet focused on that recipe.
+- Recipe sheet includes active link to full recipe and embedded youtube video, if addresses are provided.
+
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas?
 I chose to focus on the RecipeList and RecipeView, as the user would be spending all their time on those two screens. I made sure they both had at least the minimum number of features a user might expect, and included easy to implement features from data provided by the API.
 
