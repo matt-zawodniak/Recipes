@@ -36,14 +36,6 @@ class RecipeListViewModel: ObservableObject {
     isLoading = false
   }
 
-  func filterRecipes() {
-    if !searchText.isEmpty {
-      filteredRecipes = recipes.filter({ $0.name.lowercased().contains(searchText.lowercased()) || $0.cuisine.lowercased().contains(searchText.lowercased()) })
-    } else {
-      filteredRecipes = recipes
-    }
-  }
-
   func selectRecipe(recipe: Recipe) {
     selectedRecipe = recipe
   }
@@ -51,9 +43,21 @@ class RecipeListViewModel: ObservableObject {
   func sortRecipes() {
     switch sortMethod {
       case .name:
-      self.filteredRecipes.sort { $0.name < $1.name }
+      self.recipes.sort { $0.name < $1.name }
+      filteredRecipes = recipes
+      filterRecipes()
     case .cuisine:
-      self.filteredRecipes.sort { $0.cuisine < $1.cuisine }
+      self.recipes.sort { $0.cuisine < $1.cuisine }
+      filteredRecipes = recipes
+      filterRecipes()
+    }
+  }
+
+  func filterRecipes() {
+    if !searchText.isEmpty {
+      filteredRecipes = recipes.filter({ $0.name.lowercased().contains(searchText.lowercased()) || $0.cuisine.lowercased().contains(searchText.lowercased()) })
+    } else {
+      filteredRecipes = recipes
     }
   }
 }
